@@ -31,7 +31,7 @@ packages, operating directly on continuous Gaussian measurements.
 Lyubishchev, A.A. (1943). Programma obshchey sistematiki
 [Program of General Systematics]. Manuscript, 22 November 1943.
 Digitized by ZIN RAS Coleoptera Laboratory.
-\url{http://www.zin.ru/animalia/coleoptera/rus/lyubis05.htm}
+\url{https://www.zin.ru/animalia/coleoptera/rus/lyubis05.htm}
 
 Lubischew, A.A. (1962). On the use of discriminant functions in taxonomy.
 Biometrics, 18(4), 455-477.

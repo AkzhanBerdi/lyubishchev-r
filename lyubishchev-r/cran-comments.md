@@ -11,7 +11,7 @@ Notes:
   maintainer (Akzhan Berdeyev <akzhan.berdeyev@gmail.com>). This is expected.
 
 * The same note reports the URL
-  http://www.zin.ru/animalia/coleoptera/rus/lyubis05.htm as "403 Forbidden".
+  https://www.zin.ru/animalia/coleoptera/rus/lyubis05.htm as "403 Forbidden".
   The URL is correct and valid in a browser; the host (ZIN RAS Coleoptera
   Laboratory archive) rejects automated HEAD/GET requests. It is the canonical
   primary source for Lyubishchev's 1943 manuscript and is cited deliberately.

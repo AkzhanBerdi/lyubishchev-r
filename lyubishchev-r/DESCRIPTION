@@ -1,0 +1,28 @@
+Package: lyubishchev
+Type: Package
+Title: Quantitative Taxonomy Methods of A.A. Lyubishchev (1943)
+Version: 0.1.0
+Authors@R: person("Akzhan", "Berdeyev",
+    email = "akzhan.berdeyev@gmail.com",
+    role = c("aut", "cre"))
+Description: Implements the multivariate classification methods of
+    Alexander Alexandrovich Lyubishchev (1890-1972), as described in
+    his 1943 manuscript 'Programma obshchey sistematiki' and published
+    in Biometrics (1962). Provides divergence_coefficient() for
+    measuring separation between groups on continuous features,
+    scatter_ellipse() for fitting covariance ellipses per class,
+    transgression() for detecting ellipse overlap, and classify() for
+    Bayesian posterior classification. These methods predate and are
+    more general than the binary-character similarity coefficients of
+    Sokal and Sneath (1963) that appear in other R packages.
+License: MIT + file LICENSE
+Encoding: UTF-8
+RoxygenNote: 7.3.1
+Suggests: testthat (>= 3.0.0), knitr, rmarkdown, ggplot2
+VignetteBuilder: knitr
+URL: https://github.com/AkzhanBerdi/lyubishchev
+BugReports: https://github.com/AkzhanBerdi/lyubishchev/issues
+NeedsCompilation: no
+Packaged: 2026-06-08 11:57:21 UTC; root
+Author: Akzhan Berdeyev [aut, cre]
+Maintainer: Akzhan Berdeyev <akzhan.berdeyev@gmail.com>

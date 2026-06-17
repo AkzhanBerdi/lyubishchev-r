@@ -1,0 +1,113 @@
+---
+title: "Quantitative Taxonomy with Lyubishchev's Methods"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Quantitative Taxonomy with Lyubishchev's Methods}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(lyubishchev)
+```
+
+## Background
+
+Alexander Alexandrovich Lyubishchev (1890-1972) was a Russian biologist and
+entomologist who, in a 1943 manuscript titled *Programma obshchey sistematiki*
+(*Program of General Systematics*), set out a quantitative, multivariate
+approach to classification. His methods were later presented in English in
+*Biometrics* (Lubischew, 1962).
+
+Lyubishchev's framework operates directly on continuous measurements, using
+means, variances and covariances to quantify how far apart groups are and
+whether they overlap. This predates and is more general than the
+binary-character similarity coefficients of Sokal and Sneath (1963) that appear
+in other R packages. Because the original Russian manuscript was not widely
+cited in the Western numerical-taxonomy literature, this lineage is often
+overlooked.
+
+This package implements four core functions. We illustrate them on the
+familiar `iris` data set.
+
+## Divergence coefficient
+
+The divergence coefficient `D` measures the standardised separation between two
+groups summed across features. Setosa is famously distinct from the other two
+species, so we expect a large value.
+
+```{r}
+setosa <- iris[iris$Species == "setosa", 1:4]
+versicolor <- iris[iris$Species == "versicolor", 1:4]
+
+divergence_coefficient(setosa, versicolor)
+```
+
+A large `D` confirms the two groups are easily separable on these features.
+
+## Scatter ellipses
+
+`scatter_ellipse()` fits a covariance ellipse to every class, returning the
+centroid, covariance and sample size for each.
+
+```{r}
+ellipses <- scatter_ellipse(iris[, 1:4], iris$Species)
+
+ellipses[["setosa"]]$mean
+ellipses[["setosa"]]$cov
+ellipses[["setosa"]]$n_samples
+```
+
+## Transgression
+
+`transgression()` checks whether two ellipses overlap, comparing the squared
+Mahalanobis distance between centroids against a chi-squared threshold.
+Versicolor and virginica are the hard pair: they are known to overlap.
+
+```{r}
+transgression(ellipses, "versicolor", "virginica")
+```
+
+Contrast this with the easy pair, setosa versus virginica:
+
+```{r}
+transgression(ellipses, "setosa", "virginica")
+```
+
+A `separation_ratio` above 1 (and `transgression = FALSE`) marks well-separated
+groups.
+
+## Classification
+
+`classify()` assigns posterior probabilities to a new specimen using the
+multivariate Gaussian likelihood of each class. Here is a typical setosa
+specimen.
+
+```{r}
+specimen <- c(5.1, 3.5, 1.4, 0.2)
+result <- classify(specimen, ellipses)
+
+sapply(result, function(r) r$posterior)
+```
+
+The posterior concentrates on setosa, as expected.
+
+## When to use this package
+
+These methods assume continuous, roughly Gaussian features. Use them for
+measurement data such as morphometrics, spectra or sensor readings. They are
+**not** appropriate for purely categorical or binary character data, where the
+Sokal-Sneath style similarity coefficients are the right tool.
+
+## References
+
+Lyubishchev, A.A. (1943). *Programma obshchey sistematiki* [Program of General
+Systematics]. Manuscript, 22 November 1943. Digitized by ZIN RAS Coleoptera
+Laboratory. <http://www.zin.ru/animalia/coleoptera/rus/lyubis05.htm>
+
+Lubischew, A.A. (1962). On the use of discriminant functions in taxonomy.
+*Biometrics*, 18(4), 455-477.
